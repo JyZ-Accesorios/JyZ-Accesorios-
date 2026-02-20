@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>El Profeta - Inventario Mágico</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Special+Elite&family=Old+Standard+TT:ital,wght@0,400;0,700;1,400&display=swap');
+
+        :root {
+            --pergamino: #e4d5b7; --tinta: #0f0f0f;
+            --oro: #d4af37; --oro-oscuro: #8b6d45;
+            --sangre: #8b0000;
+        }
+
+        body { margin: 0; background: #1a1a1a; color: var(--tinta); font-family: 'Old Standard TT', serif; padding: 10px; }
+
+        .newspaper {
+            background: var(--pergamino) url('https://www.transparenttextures.com/patterns/paper-fibers.png');
+            width: 100%; max-width: 500px; min-height: 100vh;
+            margin: auto; padding: 20px; box-sizing: border-box;
+            box-shadow: 0 0 50px rgba(0,0,0,0.8);
+            border: 2px solid #333;
+        }
+
+        header { text-align: center; border-bottom: 4px double var(--tinta); margin-bottom: 15px; }
+        header h1 { font-family: 'Cinzel', serif; font-size: 32px; margin: 0; letter-spacing: 2px; }
+        
+        .meta-bar { display: flex; justify-content: space-between; padding: 5px; font-size: 10px; font-family: 'Cinzel'; font-weight: bold; border-top: 1px solid #000; }
+
+        .stats-box {
+            background: rgba(0,0,0,0.05); border: 1px solid var(--tinta);
+            padding: 10px; margin: 15px 0; font-family: 'Cinzel';
+        }
+        .stats-title { font-size: 12px; text-align: center; border-bottom: 1px solid #000; margin-bottom: 8px; }
+        .stat-row { display: flex; justify-content: space-between; font-size: 13px; margin: 3px 0; }
+
+        .product-card {
+            border: 1px solid #333; padding: 12px; margin-bottom: 15px;
+            background: rgba(255,255,255,0.3); transition: 0.3s;
+        }
+        .product-card:hover { background: rgba(255,255,255,0.5); transform: scale(1.02); }
+        .product-header { display: flex; justify-content: space-between; border-bottom: 1px solid #000; padding-bottom: 5px; }
+        .product-name { font-family: 'Cinzel'; font-weight: 900; font-size: 14px; }
+        .product-price { color: var(--sangre); font-weight: bold; }
+        .product-info { font-family: 'Special Elite'; font-size: 12px; margin-top: 8px; }
+
+        .badge { font-size: 9px; padding: 2px 5px; border-radius: 3px; background: #000; color: var(--oro); text-transform: uppercase; }
+
+        .sec-title { font-family: 'Cinzel'; background: #000; color: var(--oro); text-align: center; padding: 6px; font-size: 12px; margin: 25px 0 10px 0; }
+        
+        button { cursor: pointer; font-family: 'Cinzel'; }
+        .btn-magic { background: #000; color: var(--oro); border: 1px solid var(--oro); padding: 10px; width: 100%; margin-top: 10px; }
+    </style>
+</head>
+<body>
+
+<div class="newspaper">
+    <header>
+        <h1>EL PROFETA</h1>
+        <div class="meta-bar">
+            <span>EDICIÓN: EMPRENDEDORES</span>
+            <span id="fecha-actual"></span>
+            <span>CÓRDOBA, ARG.</span>
+        </div>
+    </header>
+
+    <div class="stats-box">
+        <div class="stats-title">✦ BÓVEDA DE GRINGOTTS (RESUMEN) ✦</div>
+        <div class="stat-row"><span>Total Productos:</span> <span id="total-art">0</span></div>
+        <div class="stat-row"><span>Stock Global:</span> <span id="total-stock">0</span></div>
+        <div class="stat-row" style="color: var(--sangre); font-weight: bold; border-top: 1px solid #000; margin-top: 5px; padding-top: 5px;">
+            <span>VALOR TOTAL:</span> <span id="valor-total">$ 0</span>
+        </div>
+    </div>
+
+    <div class="sec-title">ARTÍCULOS DISPONIBLES</div>
+    <div id="lista-productos">
+        </div>
+
+    <div class="sec-title">NOTAS DEL MINISTERIO</div>
+    <div style="font-family: 'Special Elite'; font-size: 13px; padding: 10px; border-left: 4px solid var(--oro-oscuro); background: rgba(0,0,0,0.03);">
+        "Recordar que los productos de categoría <b>APPLE</b> tienen alta demanda. Vigilar el stock de <b>Perfumes Árabes</b> ya que es nuestro artículo más popular."
+    </div>
+
+    <button class="btn-magic" onclick="window.print()">🖨️ IMPRIMIR MANIFIESTO</button>
+</div>
+
+<script>
+    // Datos extraídos de tu imagen
+    const inventario = [
+        { cod: 1, prod: "BALANZA CON RECIPIENTE", cat: "DINAX", cant: 2, precio: 12000 },
+        { cod: 2, prod: "DEPILADOR DE CRISTAL", cat: "PERSONAL", cant: 2, precio: 5000 },
+        { cod: 4, prod: "BOLSO FIBRAS 24 UN", cat: "ESCOLAR", cant: 1, precio: 15000 },
+        { cod: 5, prod: "AURI SAMSUNG 3.5", cat: "SAMSUNG", cant: 3, precio: 5000 },
+        { cod: 6, prod: "CABLE MICRO USB", cat: "GENERICOS", cant: 2, precio: 4000 },
+        { cod: 7, prod: "COMBO 5W + LIGHTNING", cat: "APPLE", cant: 1, precio: 18000 },
+        { cod: 8, prod: "FUENTE 20W", cat: "APPLE", cant: 1, precio: 14000 },
+        { cod: 9, prod: "GLASS CAMARA 15 PRO", cat: "APPLE", cant: 3, precio: 5000 },
+        { cod: 10, prod: "CABLE C A C", cat: "APPLE", cant: 2, precio: 10000 },
+        { cod: 11, prod: "CABLE C A LIGHTNING", cat: "APPLE", cant: 2, precio: 8000 },
+        { cod: 12, prod: "PERFUME ARABE", cat: "PERFUMES", cant: 6, precio: 6000 },
+        { cod: 13, prod: "CABLE USB A C", cat: "GENERICOS", cant: 1, precio: 5000 },
+        { cod: 14, prod: "SILICON IPH 13", cat: "FUNDAS APPLE", cant: 4, precio: 8000 },
+        { cod: 15, prod: "SILICON IPH 16", cat: "FUNDAS APPLE", cant: 3, precio: 10000 },
+        { cod: 16, prod: "SILICON IPH 15", cat: "FUNDAS APPLE", cant: 1, precio: 8000 },
+        { cod: 17, prod: "SILICON IPH 17 PRO", cat: "FUNDAS APPLE", cant: 1, precio: 12000 },
+        { cod: 18, prod: "SILICON A36", cat: "FUNDAS SAMSUNG", cant: 2, precio: 8000 },
+        { cod: 19, prod: "SILICON A16", cat: "FUNDAS SAMSUNG", cant: 2, precio: 8000 },
+        { cod: 3, prod: "AURI AKG TIPO C", cat: "SAMSUNG", cant: 2, precio: 8000 }
+    ];
+
+    function cargarInventario() {
+        const lista = document.getElementById('lista-productos');
+        let totalPesos = 0;
+        let totalStock = 0;
+
+        // Ordenar por código antes de mostrar
+        inventario.sort((a,b) => a.cod - b.cod);
+
+        inventario.forEach(p => {
+            const subtotal = p.cant * p.precio;
+            totalPesos += subtotal;
+            totalStock += p.cant;
+
+            lista.innerHTML += `
+                <div class="product-card">
+                    <div class="product-header">
+                        <span class="product-name">${p.prod}</span>
+                        <span class="product-price">$ ${p.precio.toLocaleString('es-AR')}</span>
+                    </div>
+                    <div class="product-info">
+                        <span class="badge">${p.cat}</span> | 
+                        CÓD: #${p.cod} | 
+                        STOCK: <b>${p.cant} unid.</b><br>
+                        <small style="color:#666">Subtotal: $ ${subtotal.toLocaleString('es-AR')}</small>
+                    </div>
+                </div>
+            `;
+        });
+
+        // Actualizar estadísticas
+        document.getElementById('total-art').innerText = inventario.length;
+        document.getElementById('total-stock').innerText = totalStock;
+        document.getElementById('valor-total').innerText = `$ ${totalPesos.toLocaleString('es-AR')}`;
+        document.getElementById('fecha-actual').innerText = new Date().toLocaleDateString('es-ES', {day:'numeric', month:'short', year:'numeric'}).toUpperCase();
+    }
+
+    cargarInventario();
+</script>
+
+</body>
+</html>
