@@ -3,13 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Catálogo de Accesorios | Emprendimiento</title>
+    <title>Catálogo Nexus | Accesorios</title>
     <style>
         :root {
-            --accent: #007AFF; /* Azul estilo Apple/Moderno */
+            --accent: #007AFF; 
             --bg: #f5f5f7;
             --card-bg: #ffffff;
             --text: #1d1d1f;
+            --ws-color: #25D366;
         }
 
         body {
@@ -20,7 +21,6 @@
             padding: 0;
         }
 
-        /* Header */
         header {
             background: rgba(255, 255, 255, 0.8);
             backdrop-filter: blur(10px);
@@ -32,10 +32,9 @@
             border-bottom: 1px solid #d2d2d7;
         }
 
-        header h1 { font-size: 1.2rem; margin: 0; font-weight: 600; }
+        header h1 { font-size: 1.2rem; margin: 0; font-weight: 700; letter-spacing: -0.5px; }
         header p { font-size: 0.8rem; margin: 5px 0 0; color: #86868b; }
 
-        /* Categorías */
         .categories {
             display: flex;
             overflow-x: auto;
@@ -48,177 +47,170 @@
         .cat-btn {
             background: var(--card-bg);
             border: 1px solid #d2d2d7;
-            padding: 8px 16px;
+            padding: 8px 18px;
             border-radius: 20px;
             white-space: nowrap;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
+            font-weight: 500;
             cursor: pointer;
-            transition: 0.3s;
+            transition: 0.2s;
         }
         .cat-btn.active {
-            background: var(--accent);
+            background: var(--text);
             color: white;
-            border-color: var(--accent);
+            border-color: var(--text);
         }
 
-        /* Grid de Productos */
         .catalog-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-            gap: 15px;
-            padding: 15px;
+            gap: 12px;
+            padding: 12px;
         }
 
         .product-card {
             background: var(--card-bg);
-            border-radius: 18px;
-            padding: 15px;
+            border-radius: 20px;
+            padding: 12px;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-            transition: transform 0.2s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
         }
-        .product-card:active { transform: scale(0.95); }
 
-        /* Espacio para Imagen (Placeholder) */
-        .img-placeholder {
+        .img-container {
             width: 100%;
             aspect-ratio: 1/1;
             background: #fbfbfd;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            border-radius: 14px;
+            overflow: hidden;
             margin-bottom: 10px;
-            color: #d2d2d7;
-            font-size: 0.7rem;
-            text-align: center;
-            border: 1px solid #f0f0f0;
+        }
+
+        .img-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
         .product-info h3 {
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             margin: 0;
-            font-weight: 500;
-            height: 2.4em;
-            overflow: hidden;
+            font-weight: 600;
+            height: 2.5em;
+            line-height: 1.25;
             display: -webkit-box;
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
+            overflow: hidden;
         }
 
         .price {
             font-size: 1.1rem;
-            font-weight: 700;
-            color: var(--accent);
-            margin: 10px 0;
+            font-weight: 800;
+            margin: 8px 0;
         }
 
         .ws-btn {
-            background: #25D366;
+            background: var(--ws-color);
             color: white;
             text-decoration: none;
             text-align: center;
-            padding: 8px;
-            border-radius: 10px;
-            font-size: 0.8rem;
-            font-weight: 600;
+            padding: 10px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 700;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 5px;
+            gap: 6px;
+            transition: 0.2s;
         }
 
+        .ws-btn:active { transform: scale(0.96); }
+
         .stock-tag {
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             color: #ff3b30;
-            margin-top: 5px;
-            font-weight: 600;
+            font-weight: 700;
+            margin-bottom: 5px;
+            text-transform: uppercase;
         }
 
         @media (min-width: 600px) {
-            .catalog-grid { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); }
+            .catalog-grid { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; padding: 20px; }
         }
     </style>
 </head>
 <body>
 
 <header>
-    <h1>NUESTRO CATÁLOGO</h1>
-    <p>Accesorios de Tecnología & Tendencia</p>
+    <h1>NEXUS ACCESORIOS</h1>
+    <p>Calidad y Tecnología en tus manos</p>
 </header>
 
 <div class="categories" id="cat-list">
-    <button class="cat-btn active" onclick="filterCat('TODOS')">Todos</button>
-    <button class="cat-btn" onclick="filterCat('APPLE')">Apple</button>
-    <button class="cat-btn" onclick="filterCat('SAMSUNG')">Samsung</button>
-    <button class="cat-btn" onclick="filterCat('FUNDAS')">Fundas</button>
-    <button class="cat-btn" onclick="filterCat('PERFUMES')">Perfumes</button>
+    <button class="cat-btn active" onclick="filterCat('TODOS', this)">Todos</button>
+    <button class="cat-btn" onclick="filterCat('APPLE', this)">Apple</button>
+    <button class="cat-btn" onclick="filterCat('SAMSUNG', this)">Samsung</button>
+    <button class="cat-btn" onclick="filterCat('FUNDAS', this)">Fundas</button>
+    <button class="cat-btn" onclick="filterCat('PERFUMES', this)">Perfumes</button>
 </div>
 
-<div class="catalog-grid" id="catalog">
-    </div>
+<div class="catalog-grid" id="catalog"></div>
 
 <script>
     const productos = [
-        { p: "Balanza con Recipiente", cat: "VARIOS", pr: 12000, stock: 2 },
-        { p: "Depilador de Cristal", cat: "PERSONAL", pr: 5000, stock: 2 },
-        { p: "Auri AKG Tipo C", cat: "SAMSUNG", pr: 8000, stock: 2 },
-        { p: "Bolso Fibras 24 UN", cat: "VARIOS", pr: 15000, stock: 1 },
-        { p: "Auri Samsung 3.5", cat: "SAMSUNG", pr: 5000, stock: 3 },
-        { p: "Cable Micro USB", cat: "VARIOS", pr: 4000, stock: 2 },
-        { p: "Combo 5W + Lightning", cat: "APPLE", pr: 18000, stock: 1 },
-        { p: "Fuente 20W", cat: "APPLE", pr: 14000, stock: 1 },
-        { p: "Glass Cámara 15 Pro", cat: "APPLE", pr: 5000, stock: 3 },
-        { p: "Cable C a C", cat: "APPLE", pr: 10000, stock: 2 },
-        { p: "Cable C a Lightning", cat: "APPLE", pr: 8000, stock: 2 },
-        { p: "Perfume Árabe", cat: "PERFUMES", pr: 6000, stock: 6 },
-        { p: "Silicon IPH 13", cat: "FUNDAS", pr: 8000, stock: 4 },
-        { p: "Silicon IPH 16", cat: "FUNDAS", pr: 10000, stock: 3 },
-        { p: "Silicon IPH 17 Pro", cat: "FUNDAS", pr: 12000, stock: 1 },
-        { p: "Silicon A36", cat: "FUNDAS", pr: 8000, stock: 2 }
+        { p: "Balanza con Recipiente", cat: "VARIOS", pr: 12000, s: 2, img: "https://via.placeholder.com/300" },
+        { p: "Depilador de Cristal", cat: "VARIOS", pr: 5000, s: 2, img: "https://via.placeholder.com/300" },
+        { p: "Auri AKG Tipo C", cat: "SAMSUNG", pr: 8000, s: 2, img: "https://via.placeholder.com/300" },
+        { p: "Auri Samsung 3.5", cat: "SAMSUNG", pr: 5000, s: 3, img: "https://via.placeholder.com/300" },
+        { p: "Combo 5W + Lightning", cat: "APPLE", pr: 18000, s: 1, img: "https://via.placeholder.com/300" },
+        { p: "Fuente 20W", cat: "APPLE", pr: 14000, s: 1, img: "https://via.placeholder.com/300" },
+        { p: "Glass Cámara 15 Pro", cat: "APPLE", pr: 5000, s: 3, img: "https://via.placeholder.com/300" },
+        { p: "Cable C a C", cat: "APPLE", pr: 10000, s: 2, img: "https://via.placeholder.com/300" },
+        { p: "Perfume Árabe", cat: "PERFUMES", pr: 6000, s: 6, img: "https://via.placeholder.com/300" },
+        { p: "Silicon IPH 16", cat: "FUNDAS", pr: 10000, s: 3, img: "https://via.placeholder.com/300" },
+        { p: "Silicon A36", cat: "FUNDAS", pr: 8000, s: 2, img: "https://via.placeholder.com/300" }
     ];
 
-    const nroWhatsApp = "5493510000000"; // CAMBIA ESTO POR TU NÚMERO
+    const nroWhatsApp = "5493518565304"; 
 
     function renderProducts(filter = 'TODOS') {
         const container = document.getElementById('catalog');
         container.innerHTML = "";
 
         productos.forEach(item => {
+            // Lógica de filtrado: busca la palabra en la categoría
             if (filter !== 'TODOS' && !item.cat.includes(filter)) return;
 
             const card = document.createElement('div');
             card.className = 'product-card';
             
-            const msg = encodeURIComponent(`Hola! Me interesa el producto: ${item.p}`);
+            const msg = encodeURIComponent(`¡Hola! 👋 Vi el catálogo y me interesa: ${item.p}`);
             
             card.innerHTML = `
-                <div class="product-info">
-                    <div class="img-placeholder">FOTO PRODUCTO</div>
-                    <h3>${item.p}</h3>
-                    <div class="price">$ ${item.pr.toLocaleString()}</div>
-                    ${item.stock <= 1 ? '<div class="stock-tag">¡ÚLTIMA UNIDAD!</div>' : ''}
+                <div class="img-container">
+                    <img src="${item.img}" alt="${item.p}">
                 </div>
-                <a href="https://wa.me/${nroWhatsApp}?text=${msg}" class="ws-btn">
-                    Pedir por WhatsApp
+                <div class="product-info">
+                    ${item.s <= 1 ? '<div class="stock-tag">⚠️ Última disponible</div>' : ''}
+                    <h3>${item.p}</h3>
+                    <div class="price">$ ${item.pr.toLocaleString('es-AR')}</div>
+                </div>
+                <a href="https://wa.me/${nroWhatsApp}?text=${msg}" class="ws-btn" target="_blank">
+                    Consultar Stock
                 </a>
             `;
             container.appendChild(card);
         });
     }
 
-    function filterCat(cat) {
-        // Estética de botones
-        const btns = document.querySelectorAll('.cat-btn');
-        btns.forEach(b => b.classList.remove('active'));
-        event.target.classList.add('active');
-        
+    function filterCat(cat, btn) {
+        document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
         renderProducts(cat);
     }
 
-    // Carga inicial
     renderProducts();
 </script>
 
