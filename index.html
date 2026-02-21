@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Catálogo Jyz Accesorios | Accesorios</title>
+    <title>JYZ Accesorios | Catálogo</title>
     <style>
         :root {
+            --primary: #1a1a1a;
             --accent: #007AFF; 
-            --bg: #f5f5f7;
+            --bg: #f2f2f7;
             --card-bg: #ffffff;
             --text: #1d1d1f;
             --ws-color: #25D366;
@@ -21,93 +22,86 @@
             padding: 0;
         }
 
+        /* Header Profesional */
         header {
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(10px);
-            padding: 20px;
+            background: var(--card-bg);
+            padding: 25px 20px;
             text-align: center;
-            position: sticky;
-            top: 0;
-            z-index: 100;
             border-bottom: 1px solid #d2d2d7;
         }
 
-        header h1 { font-size: 1.2rem; margin: 0; font-weight: 700; letter-spacing: -0.5px; }
-        header p { font-size: 0.8rem; margin: 5px 0 0; color: #86868b; }
+        header h1 { 
+            font-size: 1.5rem; 
+            margin: 0; 
+            font-weight: 800; 
+            letter-spacing: -1px;
+            color: var(--primary);
+        }
+        header p { font-size: 0.85rem; margin: 8px 0 0; color: #86868b; font-weight: 400; }
 
+        /* Categorías */
         .categories {
             display: flex;
             overflow-x: auto;
             padding: 15px;
             gap: 10px;
             scrollbar-width: none;
+            background: var(--bg);
+            position: sticky;
+            top: 0;
+            z-index: 10;
         }
         .categories::-webkit-scrollbar { display: none; }
         
         .cat-btn {
             background: var(--card-bg);
             border: 1px solid #d2d2d7;
-            padding: 8px 18px;
-            border-radius: 20px;
+            padding: 10px 20px;
+            border-radius: 25px;
             white-space: nowrap;
-            font-size: 0.85rem;
-            font-weight: 500;
+            font-size: 0.8rem;
+            font-weight: 600;
             cursor: pointer;
-            transition: 0.2s;
+            transition: all 0.2s;
         }
         .cat-btn.active {
-            background: var(--text);
+            background: var(--primary);
             color: white;
-            border-color: var(--text);
+            border-color: var(--primary);
         }
 
+        /* Grid de Productos */
         .catalog-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
             gap: 12px;
             padding: 12px;
         }
 
         .product-card {
             background: var(--card-bg);
-            border-radius: 20px;
-            padding: 12px;
+            border-radius: 15px;
+            padding: 18px;
             display: flex;
             flex-direction: column;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-        }
-
-        .img-container {
-            width: 100%;
-            aspect-ratio: 1/1;
-            background: #fbfbfd;
-            border-radius: 14px;
-            overflow: hidden;
-            margin-bottom: 10px;
-        }
-
-        .img-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+            justify-content: space-between;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            border: 1px solid rgba(0,0,0,0.03);
         }
 
         .product-info h3 {
-            font-size: 0.85rem;
-            margin: 0;
+            font-size: 0.9rem;
+            margin: 0 0 10px 0;
             font-weight: 600;
-            height: 2.5em;
-            line-height: 1.25;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
+            line-height: 1.3;
+            color: var(--primary);
         }
 
         .price {
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             font-weight: 800;
-            margin: 8px 0;
+            margin-bottom: 15px;
+            color: var(--primary);
         }
 
         .ws-btn {
@@ -115,37 +109,40 @@
             color: white;
             text-decoration: none;
             text-align: center;
-            padding: 10px;
-            border-radius: 12px;
+            padding: 12px;
+            border-radius: 10px;
             font-size: 0.75rem;
             font-weight: 700;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 6px;
             transition: 0.2s;
         }
 
-        .ws-btn:active { transform: scale(0.96); }
+        .ws-btn:active { transform: scale(0.95); opacity: 0.9; }
 
-        .stock-tag {
-            font-size: 0.65rem;
+        .tag-stock {
+            background: #fff2f2;
             color: #ff3b30;
-            font-weight: 700;
-            margin-bottom: 5px;
+            font-size: 0.65rem;
+            font-weight: 800;
+            padding: 4px 8px;
+            border-radius: 5px;
+            display: inline-block;
+            margin-bottom: 8px;
             text-transform: uppercase;
         }
 
         @media (min-width: 600px) {
-            .catalog-grid { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; padding: 20px; }
+            .catalog-grid { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; padding: 20px; }
         }
     </style>
 </head>
 <body>
 
 <header>
-    <h1>NEXUS ACCESORIOS</h1>
-    <p>Calidad y Tecnología en tus manos</p>
+    <h1>JYZ ACCESORIOS</h1>
+    <p>Tecnología, audio y fundas para tu celular</p>
 </header>
 
 <div class="categories" id="cat-list">
@@ -153,24 +150,32 @@
     <button class="cat-btn" onclick="filterCat('APPLE', this)">Apple</button>
     <button class="cat-btn" onclick="filterCat('SAMSUNG', this)">Samsung</button>
     <button class="cat-btn" onclick="filterCat('FUNDAS', this)">Fundas</button>
+    <button class="cat-btn" onclick="filterCat('AUDIO', this)">Audio</button>
     <button class="cat-btn" onclick="filterCat('PERFUMES', this)">Perfumes</button>
 </div>
 
 <div class="catalog-grid" id="catalog"></div>
 
 <script>
+    // Los precios corresponden a lo que le cobran a sus clientes
     const productos = [
-        { p: "Balanza con Recipiente", cat: "VARIOS", pr: 12000, s: 2, img: "https://via.placeholder.com/300" },
-        { p: "Depilador de Cristal", cat: "VARIOS", pr: 5000, s: 2, img: "https://via.placeholder.com/300" },
-        { p: "Auri AKG Tipo C", cat: "SAMSUNG", pr: 8000, s: 2, img: "https://via.placeholder.com/300" },
-        { p: "Auri Samsung 3.5", cat: "SAMSUNG", pr: 5000, s: 3, img: "https://via.placeholder.com/300" },
-        { p: "Combo 5W + Lightning", cat: "APPLE", pr: 18000, s: 1, img: "https://via.placeholder.com/300" },
-        { p: "Fuente 20W", cat: "APPLE", pr: 14000, s: 1, img: "https://via.placeholder.com/300" },
-        { p: "Glass Cámara 15 Pro", cat: "APPLE", pr: 5000, s: 3, img: "https://via.placeholder.com/300" },
-        { p: "Cable C a C", cat: "APPLE", pr: 10000, s: 2, img: "https://via.placeholder.com/300" },
-        { p: "Perfume Árabe", cat: "PERFUMES", pr: 6000, s: 6, img: "https://via.placeholder.com/300" },
-        { p: "Silicon IPH 16", cat: "FUNDAS", pr: 10000, s: 3, img: "https://via.placeholder.com/300" },
-        { p: "Silicon A36", cat: "FUNDAS", pr: 8000, s: 2, img: "https://via.placeholder.com/300" }
+        { p: "Balanza con Recipiente", cat: "VARIOS", pr: 12000, s: 2 },
+        { p: "Depilador de Cristal", cat: "PERSONAL", pr: 5000, s: 2 },
+        { p: "Auri AKG Tipo C", cat: "SAMSUNG AUDIO", pr: 8000, s: 2 },
+        { p: "Bolso Fibras 24 UN", cat: "VARIOS", pr: 15000, s: 1 },
+        { p: "Auri Samsung 3.5", cat: "SAMSUNG AUDIO", pr: 5000, s: 3 },
+        { p: "Cable Micro USB", cat: "VARIOS", pr: 4000, s: 2 },
+        { p: "Combo 5W + Lightning", cat: "APPLE", pr: 18000, s: 1 },
+        { p: "Fuente 20W", cat: "APPLE", pr: 14000, s: 1 },
+        { p: "Glass Cámara 15 Pro", cat: "APPLE", pr: 5000, s: 3 },
+        { p: "Cable C a C", cat: "APPLE", pr: 10000, s: 2 },
+        { p: "Cable C a Lightning", cat: "APPLE", pr: 8000, s: 2 },
+        { p: "Perfume Árabe", cat: "PERFUMES", pr: 6000, s: 6 },
+        { p: "Silicon IPH 13", cat: "FUNDAS", pr: 8000, s: 4 },
+        { p: "Silicon IPH 16", cat: "FUNDAS", pr: 10000, s: 3 },
+        { p: "Silicon IPH 17 Pro", cat: "FUNDAS", pr: 12000, s: 1 },
+        { p: "Silicon A36", cat: "FUNDAS", pr: 8000, s: 2 },
+        { p: "Silicon A16", cat: "FUNDAS", pr: 8000, s: 2 }
     ];
 
     const nroWhatsApp = "5493518565304"; 
@@ -180,25 +185,21 @@
         container.innerHTML = "";
 
         productos.forEach(item => {
-            // Lógica de filtrado: busca la palabra en la categoría
             if (filter !== 'TODOS' && !item.cat.includes(filter)) return;
 
             const card = document.createElement('div');
             card.className = 'product-card';
             
-            const msg = encodeURIComponent(`¡Hola! 👋 Vi el catálogo y me interesa: ${item.p}`);
+            const msg = encodeURIComponent(`¡Hola JYZ Accesorios! 👋 Me gustaría pedir info y fotos de: ${item.p}`);
             
             card.innerHTML = `
-                <div class="img-container">
-                    <img src="${item.img}" alt="${item.p}">
-                </div>
                 <div class="product-info">
-                    ${item.s <= 1 ? '<div class="stock-tag">⚠️ Última disponible</div>' : ''}
+                    ${item.s <= 1 ? '<div class="tag-stock">¡Último disponible!</div>' : ''}
                     <h3>${item.p}</h3>
                     <div class="price">$ ${item.pr.toLocaleString('es-AR')}</div>
                 </div>
                 <a href="https://wa.me/${nroWhatsApp}?text=${msg}" class="ws-btn" target="_blank">
-                    Consultar Stock
+                    Consultar e Info 📲
                 </a>
             `;
             container.appendChild(card);
