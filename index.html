@@ -3,261 +3,223 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nexus Stock | Gestión de Accesorios</title>
-    <script src="https://cdn.jsdelivr.net/npm/lucide-static@0.321.0/lib/index.min.js"></script>
+    <title>Catálogo de Accesorios | Emprendimiento</title>
     <style>
         :root {
-            --primary: #2563eb;
-            --secondary: #64748b;
-            --success: #22c55e;
-            --danger: #ef4444;
-            --background: #f8fafc;
-            --card: #ffffff;
-            --text-main: #1e293b;
-            --text-muted: #64748b;
-            --border: #e2e8f0;
+            --accent: #007AFF; /* Azul estilo Apple/Moderno */
+            --bg: #f5f5f7;
+            --card-bg: #ffffff;
+            --text: #1d1d1f;
         }
 
         body {
-            font-family: 'Inter', -apple-system, sans-serif;
-            background-color: var(--background);
-            color: var(--text-main);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
             margin: 0;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
+            padding: 0;
         }
 
         /* Header */
         header {
-            background: var(--card);
-            padding: 1rem 2rem;
-            border-bottom: 1px solid var(--border);
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid #d2d2d7;
+        }
+
+        header h1 { font-size: 1.2rem; margin: 0; font-weight: 600; }
+        header p { font-size: 0.8rem; margin: 5px 0 0; color: #86868b; }
+
+        /* Categorías */
+        .categories {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            sticky: top;
+            overflow-x: auto;
+            padding: 15px;
+            gap: 10px;
+            scrollbar-width: none;
         }
-
-        .logo {
-            font-weight: 800;
-            font-size: 1.25rem;
-            color: var(--primary);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        /* Dashboard Stats */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 1.5rem;
-            padding: 2rem;
-        }
-
-        .stat-card {
-            background: var(--card);
-            padding: 1.5rem;
-            border-radius: 12px;
-            border: 1px solid var(--border);
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-        }
-
-        .stat-label {
-            color: var(--text-muted);
-            font-size: 0.875rem;
-            font-weight: 500;
-        }
-
-        .stat-value {
-            font-size: 1.75rem;
-            font-weight: 700;
-            margin-top: 0.5rem;
-            color: var(--text-main);
-        }
-
-        /* Search & Filters */
-        .controls {
-            padding: 0 2rem;
-            margin-bottom: 1rem;
-            display: flex;
-            gap: 1rem;
-        }
-
-        .search-input {
-            flex-grow: 1;
-            padding: 0.75rem 1rem;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            font-size: 0.95rem;
-        }
-
-        /* Table Style */
-        .table-container {
-            margin: 0 2rem 2rem 2rem;
-            background: var(--card);
-            border-radius: 12px;
-            border: 1px solid var(--border);
-            overflow: hidden;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            text-align: left;
-        }
-
-        thead {
-            background: #f1f5f9;
-        }
-
-        th {
-            padding: 1rem;
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            color: var(--text-muted);
-        }
-
-        td {
-            padding: 1rem;
-            border-top: 1px solid var(--border);
-            font-size: 0.95rem;
-        }
-
-        tr:hover {
-            background-color: #f8fafc;
-        }
-
-        .badge {
-            padding: 0.25rem 0.6rem;
+        .categories::-webkit-scrollbar { display: none; }
+        
+        .cat-btn {
+            background: var(--card-bg);
+            border: 1px solid #d2d2d7;
+            padding: 8px 16px;
             border-radius: 20px;
-            font-size: 0.75rem;
+            white-space: nowrap;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .cat-btn.active {
+            background: var(--accent);
+            color: white;
+            border-color: var(--accent);
+        }
+
+        /* Grid de Productos */
+        .catalog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 15px;
+            padding: 15px;
+        }
+
+        .product-card {
+            background: var(--card-bg);
+            border-radius: 18px;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            transition: transform 0.2s;
+        }
+        .product-card:active { transform: scale(0.95); }
+
+        /* Espacio para Imagen (Placeholder) */
+        .img-placeholder {
+            width: 100%;
+            aspect-ratio: 1/1;
+            background: #fbfbfd;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+            color: #d2d2d7;
+            font-size: 0.7rem;
+            text-align: center;
+            border: 1px solid #f0f0f0;
+        }
+
+        .product-info h3 {
+            font-size: 0.9rem;
+            margin: 0;
+            font-weight: 500;
+            height: 2.4em;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+
+        .price {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin: 10px 0;
+        }
+
+        .ws-btn {
+            background: #25D366;
+            color: white;
+            text-decoration: none;
+            text-align: center;
+            padding: 8px;
+            border-radius: 10px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+
+        .stock-tag {
+            font-size: 0.7rem;
+            color: #ff3b30;
+            margin-top: 5px;
             font-weight: 600;
         }
 
-        .badge-cat { background: #e0e7ff; color: #4338ca; }
-        .badge-stock { background: #dcfce7; color: #15803d; }
-        .badge-low { background: #fee2e2; color: #b91c1c; }
-
-        @media (max-width: 768px) {
-            .stats-grid { padding: 1rem; }
-            .table-container { margin: 1rem; overflow-x: auto; }
-            .controls { flex-direction: column; padding: 1rem; }
+        @media (min-width: 600px) {
+            .catalog-grid { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); }
         }
     </style>
 </head>
 <body>
 
 <header>
-    <div class="logo">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m7.5 4.27 9 5.15"/><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>
-        Nexus Inventory
-    </div>
-    <div style="font-size: 0.8rem; color: var(--text-muted);" id="live-date"></div>
+    <h1>NUESTRO CATÁLOGO</h1>
+    <p>Accesorios de Tecnología & Tendencia</p>
 </header>
 
-<div class="stats-grid">
-    <div class="stat-card">
-        <div class="stat-label">Valor Total de Venta</div>
-        <div class="stat-value" id="val-total">$0</div>
-    </div>
-    <div class="stat-card">
-        <div class="stat-label">Unidades en Stock</div>
-        <div class="stat-value" id="stock-total">0</div>
-    </div>
-    <div class="stat-card">
-        <div class="stat-label">Promedio por Artículo</div>
-        <div class="stat-value" id="avg-price">$0</div>
-    </div>
+<div class="categories" id="cat-list">
+    <button class="cat-btn active" onclick="filterCat('TODOS')">Todos</button>
+    <button class="cat-btn" onclick="filterCat('APPLE')">Apple</button>
+    <button class="cat-btn" onclick="filterCat('SAMSUNG')">Samsung</button>
+    <button class="cat-btn" onclick="filterCat('FUNDAS')">Fundas</button>
+    <button class="cat-btn" onclick="filterCat('PERFUMES')">Perfumes</button>
 </div>
 
-<div class="controls">
-    <input type="text" id="searchInput" class="search-input" placeholder="Buscar producto, código o categoría..." onkeyup="filterTable()">
-</div>
-
-<div class="table-container">
-    <table>
-        <thead>
-            <tr>
-                <th>Cod</th>
-                <th>Producto</th>
-                <th>Categoría</th>
-                <th>Stock</th>
-                <th>Precio Unit.</th>
-                <th>Subtotal</th>
-            </tr>
-        </thead>
-        <tbody id="inventoryTable">
-            </tbody>
-    </table>
-</div>
+<div class="catalog-grid" id="catalog">
+    </div>
 
 <script>
-    const data = [
-        { c: 1, p: "BALANZA CON RECIPIENTE", cat: "DINAX", s: 2, pr: 12000 },
-        { c: 2, p: "DEPILADOR DE CRISTAL", cat: "PERSONAL", s: 2, pr: 5000 },
-        { c: 3, p: "AURI AKG TIPO C", cat: "SAMSUNG", s: 2, pr: 8000 },
-        { c: 4, p: "BOLSO FIBRAS 24 UN", cat: "ESCOLAR", s: 1, pr: 15000 },
-        { c: 5, p: "AURI SAMSUNG 3.5", cat: "SAMSUNG", s: 3, pr: 5000 },
-        { c: 6, p: "CABLE MICRO USB", cat: "GENERICOS", s: 2, pr: 4000 },
-        { c: 7, p: "COMBO 5W + LIGHTNING", cat: "APPLE", s: 1, pr: 18000 },
-        { c: 8, p: "FUENTE 20W", cat: "APPLE", s: 1, pr: 14000 },
-        { c: 9, p: "GLASS CAMARA 15 PRO", cat: "APPLE", s: 3, pr: 5000 },
-        { c: 10, p: "CABLE C A C", cat: "APPLE", s: 2, pr: 10000 },
-        { c: 11, p: "CABLE C A LIGHTNING", cat: "APPLE", s: 2, pr: 8000 },
-        { c: 12, p: "PERFUME ARABE", cat: "PERFUMES", s: 6, pr: 6000 },
-        { c: 13, p: "CABLE USB A C", cat: "GENERICOS", s: 1, pr: 5000 },
-        { c: 14, p: "SILICON IPH 13", cat: "FUNDAS APPLE", s: 4, pr: 8000 },
-        { c: 15, p: "SILICON IPH 16", cat: "FUNDAS APPLE", s: 3, pr: 10000 },
-        { c: 16, p: "SILICON IPH 15", cat: "FUNDAS APPLE", s: 1, pr: 8000 },
-        { c: 17, p: "SILICON IPH 17 PRO", cat: "FUNDAS APPLE", s: 1, pr: 12000 },
-        { c: 18, p: "SILICON A36", cat: "FUNDAS SAMSUNG", s: 2, pr: 8000 },
-        { c: 19, p: "SILICON A16", cat: "FUNDAS SAMSUNG", s: 2, pr: 8000 }
+    const productos = [
+        { p: "Balanza con Recipiente", cat: "VARIOS", pr: 12000, stock: 2 },
+        { p: "Depilador de Cristal", cat: "PERSONAL", pr: 5000, stock: 2 },
+        { p: "Auri AKG Tipo C", cat: "SAMSUNG", pr: 8000, stock: 2 },
+        { p: "Bolso Fibras 24 UN", cat: "VARIOS", pr: 15000, stock: 1 },
+        { p: "Auri Samsung 3.5", cat: "SAMSUNG", pr: 5000, stock: 3 },
+        { p: "Cable Micro USB", cat: "VARIOS", pr: 4000, stock: 2 },
+        { p: "Combo 5W + Lightning", cat: "APPLE", pr: 18000, stock: 1 },
+        { p: "Fuente 20W", cat: "APPLE", pr: 14000, stock: 1 },
+        { p: "Glass Cámara 15 Pro", cat: "APPLE", pr: 5000, stock: 3 },
+        { p: "Cable C a C", cat: "APPLE", pr: 10000, stock: 2 },
+        { p: "Cable C a Lightning", cat: "APPLE", pr: 8000, stock: 2 },
+        { p: "Perfume Árabe", cat: "PERFUMES", pr: 6000, stock: 6 },
+        { p: "Silicon IPH 13", cat: "FUNDAS", pr: 8000, stock: 4 },
+        { p: "Silicon IPH 16", cat: "FUNDAS", pr: 10000, stock: 3 },
+        { p: "Silicon IPH 17 Pro", cat: "FUNDAS", pr: 12000, stock: 1 },
+        { p: "Silicon A36", cat: "FUNDAS", pr: 8000, stock: 2 }
     ];
 
-    function render() {
-        const table = document.getElementById('inventoryTable');
-        let totalVal = 0;
-        let totalStock = 0;
-        
-        // Ordenar por código
-        data.sort((a,b) => a.c - b.c);
+    const nroWhatsApp = "5493510000000"; // CAMBIA ESTO POR TU NÚMERO
 
-        table.innerHTML = data.map(item => {
-            const subtotal = item.s * item.pr;
-            totalVal += subtotal;
-            totalStock += item.s;
-            return `
-                <tr>
-                    <td><span style="color:var(--text-muted)">#${item.c}</span></td>
-                    <td style="font-weight:600">${item.p}</td>
-                    <td><span class="badge badge-cat">${item.cat}</span></td>
-                    <td><span class="badge ${item.s <= 1 ? 'badge-low' : 'badge-stock'}">${item.s} uds</span></td>
-                    <td style="font-weight:500">$ ${item.pr.toLocaleString()}</td>
-                    <td style="font-weight:700; color:var(--primary)">$ ${subtotal.toLocaleString()}</td>
-                </tr>
+    function renderProducts(filter = 'TODOS') {
+        const container = document.getElementById('catalog');
+        container.innerHTML = "";
+
+        productos.forEach(item => {
+            if (filter !== 'TODOS' && !item.cat.includes(filter)) return;
+
+            const card = document.createElement('div');
+            card.className = 'product-card';
+            
+            const msg = encodeURIComponent(`Hola! Me interesa el producto: ${item.p}`);
+            
+            card.innerHTML = `
+                <div class="product-info">
+                    <div class="img-placeholder">FOTO PRODUCTO</div>
+                    <h3>${item.p}</h3>
+                    <div class="price">$ ${item.pr.toLocaleString()}</div>
+                    ${item.stock <= 1 ? '<div class="stock-tag">¡ÚLTIMA UNIDAD!</div>' : ''}
+                </div>
+                <a href="https://wa.me/${nroWhatsApp}?text=${msg}" class="ws-btn">
+                    Pedir por WhatsApp
+                </a>
             `;
-        }).join('');
-
-        document.getElementById('val-total').innerText = `$ ${totalVal.toLocaleString()}`;
-        document.getElementById('stock-total').innerText = totalStock;
-        document.getElementById('avg-price').innerText = `$ ${(totalVal / totalStock).toFixed(0).toLocaleString()}`;
-        document.getElementById('live-date').innerText = new Date().toLocaleDateString();
+            container.appendChild(card);
+        });
     }
 
-    function filterTable() {
-        const input = document.getElementById('searchInput').value.toUpperCase();
-        const trs = document.getElementById('inventoryTable').getElementsByTagName('tr');
-        for (let i = 0; i < trs.length; i++) {
-            const text = trs[i].innerText.toUpperCase();
-            trs[i].style.display = text.includes(input) ? "" : "none";
-        }
+    function filterCat(cat) {
+        // Estética de botones
+        const btns = document.querySelectorAll('.cat-btn');
+        btns.forEach(b => b.classList.remove('active'));
+        event.target.classList.add('active');
+        
+        renderProducts(cat);
     }
 
-    render();
+    // Carga inicial
+    renderProducts();
 </script>
 
 </body>
